@@ -10,7 +10,7 @@ public class GadgetShop {
     // gui stuff
     private JFrame frame;
     private JTextField modelField, priceField, weightField, sizeField, creditField, memoryField, phoneNumberField, durationField, downloadField, displayField;
-    private JButton addMobileBtn, addMP3Btn, clearBtn, displayAllBtn, makeCallBtn, downloadBtn;
+    private JButton addMobileBtn, addMP3Btn, clearBtn, makeCallBtn, downloadBtn;
 
     // constructor for the shop
     public GadgetShop() {
@@ -23,176 +23,281 @@ public class GadgetShop {
         frame = new JFrame("Gadget Shop - CS4001 Coursework");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
-        frame.setSize(550, 450);
-        frame.getContentPane().setBackground(new Color(240, 248, 255)); // Light blue background
+        frame.setSize(800, 700);
+        frame.getContentPane().setBackground(new Color(240, 248, 255));
 
         // title label
         JLabel titleLabel = new JLabel("Welcome to Gadget Shop", JLabel.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         titleLabel.setForeground(new Color(0, 102, 204));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         frame.add(titleLabel, BorderLayout.NORTH);
 
-        JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBackground(new Color(240, 248, 255));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.anchor = GridBagConstraints.WEST;
+        // Create tabbed pane for different operations
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setBackground(new Color(240, 248, 255));
 
-        // add model field
-        gbc.gridx = 0; gbc.gridy = 0;
-        JLabel modelLabel = new JLabel("Model:");
-        modelLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(modelLabel, gbc);
-        gbc.gridx = 1;
-        modelField = new JTextField(15);
-        modelField.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(modelField, gbc);
+        // Tab 1: Add Gadgets
+        JPanel addGadgetPanel = createAddGadgetPanel();
+        tabbedPane.addTab("Add Gadgets", addGadgetPanel);
 
-        // Row 1: Price
-        gbc.gridx = 0; gbc.gridy = 1;
-        JLabel priceLabel = new JLabel("Price:");
-        priceLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(priceLabel, gbc);
-        gbc.gridx = 1;
-        priceField = new JTextField(15);
-        priceField.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(priceField, gbc);
+        // Tab 2: Operations (Make Call, Download Music)
+        JPanel operationsPanel = createOperationsPanel();
+        tabbedPane.addTab("Operations", operationsPanel);
 
-        // Row 2: Weight
-        gbc.gridx = 0; gbc.gridy = 2;
-        JLabel weightLabel = new JLabel("Weight:");
-        weightLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(weightLabel, gbc);
-        gbc.gridx = 1;
-        weightField = new JTextField(15);
-        weightField.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(weightField, gbc);
+        // Tab 3: Display & Manage
+        JPanel displayPanel = createDisplayPanel();
+        tabbedPane.addTab("View Gadgets", displayPanel);
 
-        // Row 3: Size
-        gbc.gridx = 0; gbc.gridy = 3;
-        JLabel sizeLabel = new JLabel("Size:");
-        sizeLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(sizeLabel, gbc);
-        gbc.gridx = 1;
-        sizeField = new JTextField(15);
-        sizeField.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(sizeField, gbc);
+        frame.add(tabbedPane, BorderLayout.CENTER);
 
-        // Row 4: Credit
-        gbc.gridx = 0; gbc.gridy = 4;
-        JLabel creditLabel = new JLabel("Credit:");
-        creditLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(creditLabel, gbc);
-        gbc.gridx = 1;
-        creditField = new JTextField(15);
-        creditField.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(creditField, gbc);
-
-        // Row 5: Memory
-        gbc.gridx = 0; gbc.gridy = 5;
-        JLabel memoryLabel = new JLabel("Memory:");
-        memoryLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(memoryLabel, gbc);
-        gbc.gridx = 1;
-        memoryField = new JTextField(15);
-        memoryField.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(memoryField, gbc);
-
-        // Row 6: Duration
-        gbc.gridx = 0; gbc.gridy = 6;
-        JLabel durationLabel = new JLabel("Duration:");
-        durationLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(durationLabel, gbc);
-        gbc.gridx = 1;
-        durationField = new JTextField(15);
-        durationField.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(durationField, gbc);
-
-        // Row 7: Download Size
-        gbc.gridx = 0; gbc.gridy = 7;
-        JLabel downloadLabel = new JLabel("Download Size:");
-        downloadLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(downloadLabel, gbc);
-        gbc.gridx = 1;
-        downloadField = new JTextField(15);
-        downloadField.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(downloadField, gbc);
-
-        // Row 8: Phone Number
-        gbc.gridx = 0; gbc.gridy = 8;
-        JLabel phoneNumberLabel = new JLabel("Phone Number:");
-        phoneNumberLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(phoneNumberLabel, gbc);
-        gbc.gridx = 1;
-        phoneNumberField = new JTextField(15);
-        phoneNumberField.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(phoneNumberField, gbc);
-
-        // Row 9: Display Number
-        gbc.gridx = 0; gbc.gridy = 9;
-        JLabel displayLabel = new JLabel("Display Number:");
-        displayLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(displayLabel, gbc);
-        gbc.gridx = 1;
-        displayField = new JTextField(15);
-        displayField.setFont(new Font("Arial", Font.PLAIN, 12));
-        formPanel.add(displayField, gbc);
-
-        // buttons panel
-        JPanel buttonPanel = new JPanel(new FlowLayout());
-        buttonPanel.setBackground(new Color(240, 248, 255));
-
-        // add mobile button
-        addMobileBtn = new JButton("Add Mobile");
-        addMobileBtn.setBackground(new Color(34, 139, 34));
-        addMobileBtn.setForeground(Color.WHITE);
-        addMobileBtn.setFont(new Font("Arial", Font.BOLD, 12));
-
-        addMP3Btn = new JButton("Add MP3");
-        addMP3Btn.setBackground(new Color(34, 139, 34));
-        addMP3Btn.setForeground(Color.WHITE);
-        addMP3Btn.setFont(new Font("Arial", Font.BOLD, 12));
-
-        clearBtn = new JButton("Clear");
+        // footer with clear button
+        JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        footerPanel.setBackground(new Color(240, 248, 255));
+        clearBtn = new JButton("Clear All Fields");
         clearBtn.setBackground(new Color(255, 165, 0));
         clearBtn.setForeground(Color.WHITE);
         clearBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        clearBtn.addActionListener(e -> clearFields());
+        footerPanel.add(clearBtn);
+        frame.add(footerPanel, BorderLayout.SOUTH);
 
-        displayAllBtn = new JButton("Display All");
-        displayAllBtn.setBackground(new Color(0, 102, 204));
-        displayAllBtn.setForeground(Color.WHITE);
-        displayAllBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        frame.setVisible(true);
+    }
 
-        makeCallBtn = new JButton("Make a Call");
+    // Create Add Gadget Tab
+    private JPanel createAddGadgetPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(240, 248, 255));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.anchor = GridBagConstraints.WEST;
+
+        // Common fields section
+        JLabel commonLabel = new JLabel("Common Fields:");
+        commonLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        panel.add(commonLabel, gbc);
+        gbc.gridwidth = 1;
+
+        // Model
+        gbc.gridx = 0; gbc.gridy = 1;
+        panel.add(new JLabel("Model:"), gbc);
+        gbc.gridx = 1;
+        modelField = new JTextField(20);
+        panel.add(modelField, gbc);
+
+        // Price
+        gbc.gridx = 0; gbc.gridy = 2;
+        panel.add(new JLabel("Price (£):"), gbc);
+        gbc.gridx = 1;
+        priceField = new JTextField(20);
+        panel.add(priceField, gbc);
+
+        // Weight
+        gbc.gridx = 0; gbc.gridy = 3;
+        panel.add(new JLabel("Weight (g):"), gbc);
+        gbc.gridx = 1;
+        weightField = new JTextField(20);
+        panel.add(weightField, gbc);
+
+        // Size
+        gbc.gridx = 0; gbc.gridy = 4;
+        panel.add(new JLabel("Size:"), gbc);
+        gbc.gridx = 1;
+        sizeField = new JTextField(20);
+        panel.add(sizeField, gbc);
+
+        // Mobile section
+        gbc.gridx = 0; gbc.gridy = 5; gbc.gridwidth = 2;
+        JSeparator sep1 = new JSeparator();
+        panel.add(sep1, gbc);
+        gbc.gridwidth = 1;
+
+        gbc.gridx = 0; gbc.gridy = 6; gbc.gridwidth = 2;
+        JLabel mobileLabel = new JLabel("Mobile Phone - Credit (minutes):");
+        mobileLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        panel.add(mobileLabel, gbc);
+        gbc.gridwidth = 1;
+
+        gbc.gridx = 0; gbc.gridy = 7;
+        panel.add(new JLabel("Credit:"), gbc);
+        gbc.gridx = 1;
+        creditField = new JTextField(20);
+        panel.add(creditField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 8;
+        addMobileBtn = new JButton("✓ Add Mobile");
+        addMobileBtn.setBackground(new Color(34, 139, 34));
+        addMobileBtn.setForeground(Color.WHITE);
+        addMobileBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        addMobileBtn.addActionListener(e -> addMobile());
+        gbc.gridwidth = 2;
+        panel.add(addMobileBtn, gbc);
+        gbc.gridwidth = 1;
+
+        // MP3 section
+        gbc.gridx = 0; gbc.gridy = 9; gbc.gridwidth = 2;
+        JSeparator sep2 = new JSeparator();
+        panel.add(sep2, gbc);
+        gbc.gridwidth = 1;
+
+        gbc.gridx = 0; gbc.gridy = 10; gbc.gridwidth = 2;
+        JLabel mp3Label = new JLabel("MP3 Player - Memory (MB):");
+        mp3Label.setFont(new Font("Arial", Font.BOLD, 14));
+        panel.add(mp3Label, gbc);
+        gbc.gridwidth = 1;
+
+        gbc.gridx = 0; gbc.gridy = 11;
+        panel.add(new JLabel("Memory:"), gbc);
+        gbc.gridx = 1;
+        memoryField = new JTextField(20);
+        panel.add(memoryField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 12;
+        addMP3Btn = new JButton("✓ Add MP3");
+        addMP3Btn.setBackground(new Color(34, 139, 34));
+        addMP3Btn.setForeground(Color.WHITE);
+        addMP3Btn.setFont(new Font("Arial", Font.BOLD, 12));
+        addMP3Btn.addActionListener(e -> addMP3());
+        gbc.gridwidth = 2;
+        panel.add(addMP3Btn, gbc);
+
+        return panel;
+    }
+
+    // Create Operations Tab
+    private JPanel createOperationsPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(240, 248, 255));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(8, 8, 8, 8);
+        gbc.anchor = GridBagConstraints.WEST;
+
+        // Make Call section
+        JLabel callLabel = new JLabel("Make a Call");
+        callLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
+        panel.add(callLabel, gbc);
+        gbc.gridwidth = 1;
+
+        gbc.gridx = 0; gbc.gridy = 1;
+        panel.add(new JLabel("Mobile Number (Index):"), gbc);
+        gbc.gridx = 1;
+        displayField = new JTextField(20);
+        panel.add(displayField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 2;
+        panel.add(new JLabel("Phone Number:"), gbc);
+        gbc.gridx = 1;
+        phoneNumberField = new JTextField(20);
+        panel.add(phoneNumberField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 3;
+        panel.add(new JLabel("Duration (minutes):"), gbc);
+        gbc.gridx = 1;
+        durationField = new JTextField(20);
+        panel.add(durationField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 4;
+        makeCallBtn = new JButton("☎ Make a Call");
         makeCallBtn.setBackground(new Color(255, 69, 0));
         makeCallBtn.setForeground(Color.WHITE);
         makeCallBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        makeCallBtn.addActionListener(e -> makeCall());
+        gbc.gridwidth = 2;
+        panel.add(makeCallBtn, gbc);
+        gbc.gridwidth = 1;
 
-        downloadBtn = new JButton("Download Music");
+        // Download Music section
+        gbc.gridx = 0; gbc.gridy = 5; gbc.gridwidth = 2;
+        JSeparator sep = new JSeparator();
+        panel.add(sep, gbc);
+        gbc.gridwidth = 1;
+
+        gbc.gridx = 0; gbc.gridy = 6; gbc.gridwidth = 2;
+        JLabel downloadLabel = new JLabel("Download Music");
+        downloadLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        panel.add(downloadLabel, gbc);
+        gbc.gridwidth = 1;
+
+        gbc.gridx = 0; gbc.gridy = 7;
+        panel.add(new JLabel("MP3 Player (Index):"), gbc);
+        gbc.gridx = 1;
+        JTextField displayField2 = new JTextField(20);
+        panel.add(displayField2, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 8;
+        panel.add(new JLabel("Download Size (MB):"), gbc);
+        gbc.gridx = 1;
+        downloadField = new JTextField(20);
+        panel.add(downloadField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 9;
+        downloadBtn = new JButton("♫ Download Music");
         downloadBtn.setBackground(new Color(255, 69, 0));
         downloadBtn.setForeground(Color.WHITE);
         downloadBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        downloadBtn.addActionListener(e -> {
+            displayField.setText(displayField2.getText());
+            downloadMusic();
+        });
+        gbc.gridwidth = 2;
+        panel.add(downloadBtn, gbc);
 
-        buttonPanel.add(addMobileBtn);
-        buttonPanel.add(addMP3Btn);
-        buttonPanel.add(clearBtn);
-        buttonPanel.add(displayAllBtn);
-        buttonPanel.add(makeCallBtn);
-        buttonPanel.add(downloadBtn);
+        return panel;
+    }
 
-        frame.add(formPanel, BorderLayout.CENTER);
-        frame.add(buttonPanel, BorderLayout.SOUTH);
+    // Create Display Tab
+    private JPanel createDisplayPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(new Color(240, 248, 255));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // action listeners for buttons
-        addMobileBtn.addActionListener(e -> addMobile());
-        addMP3Btn.addActionListener(e -> addMP3());
-        clearBtn.addActionListener(e -> clearFields());
-        displayAllBtn.addActionListener(e -> displayAll());
-        makeCallBtn.addActionListener(e -> makeCall());
-        downloadBtn.addActionListener(e -> downloadMusic());
+        JLabel infoLabel = new JLabel("All Gadgets in Shop:");
+        infoLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        panel.add(infoLabel, BorderLayout.NORTH);
 
-        frame.setVisible(true);
+        JTextArea displayArea = new JTextArea();
+        displayArea.setEditable(false);
+        displayArea.setFont(new Font("Courier New", Font.PLAIN, 11));
+        displayArea.setBackground(new Color(255, 255, 255));
+        JScrollPane scrollPane = new JScrollPane(displayArea);
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        JButton refreshBtn = new JButton("🔄 Refresh List");
+        refreshBtn.setBackground(new Color(0, 102, 204));
+        refreshBtn.setForeground(Color.WHITE);
+        refreshBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        refreshBtn.addActionListener(e -> {
+            StringBuilder sb = new StringBuilder();
+            if (gadgets.isEmpty()) {
+                sb.append("No gadgets in the shop yet.\n");
+            } else {
+                for (int i = 0; i < gadgets.size(); i++) {
+                    sb.append("═══════════════════════════════════\n");
+                    sb.append("Gadget Index: ").append(i).append("\n");
+                    sb.append("───────────────────────────────────\n");
+                    Gadget g = gadgets.get(i);
+                    sb.append("Model: ").append(g.getModel()).append("\n");
+                    sb.append("Price: £").append(g.getPrice()).append("\n");
+                    sb.append("Weight: ").append(g.getWeight()).append("g\n");
+                    sb.append("Size: ").append(g.getSize()).append("\n");
+                    if (g instanceof Mobile) {
+                        sb.append("Type: MOBILE PHONE\n");
+                        sb.append("Credit: ").append(((Mobile) g).getCredit()).append(" minutes\n");
+                    } else if (g instanceof MP3) {
+                        sb.append("Type: MP3 PLAYER\n");
+                        sb.append("Memory: ").append(((MP3) g).getMemory()).append(" MB\n");
+                    }
+                    sb.append("\n");
+                }
+            }
+            displayArea.setText(sb.toString());
+        });
+        panel.add(refreshBtn, BorderLayout.SOUTH);
+
+        return panel;
     }
 
     // method to add mobile
@@ -303,26 +408,9 @@ public class GadgetShop {
     // display all gadgets
     public void displayAll() {
         if (gadgets.isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "No gadgets in the shop.");
+            System.out.println("No gadgets in the shop.");
             return;
         }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < gadgets.size(); i++) {
-            sb.append("Gadget ").append(i).append(":\n");
-            Gadget g = gadgets.get(i);
-            sb.append("Model: ").append(g.getModel()).append("\n");
-            sb.append("Price: ").append(g.getPrice()).append("\n");
-            sb.append("Weight: ").append(g.getWeight()).append("\n");
-            sb.append("Size: ").append(g.getSize()).append("\n");
-            if (g instanceof Mobile) {
-                sb.append("Credit: ").append(((Mobile) g).getCredit()).append("\n");
-            } else if (g instanceof MP3) {
-                sb.append("Memory: ").append(((MP3) g).getMemory()).append("\n");
-            }
-            sb.append("\n");
-        }
-        JOptionPane.showMessageDialog(frame, sb.toString());
-        // Also print to console
         for (int i = 0; i < gadgets.size(); i++) {
             System.out.println("Gadget " + i + ":");
             gadgets.get(i).display();
@@ -382,8 +470,14 @@ public class GadgetShop {
             if (!number.isEmpty() && duration > 0) {
                 if (gadgets.get(index) instanceof Mobile) {
                     Mobile mobile = (Mobile) gadgets.get(index);
+                    int creditBefore = mobile.getCredit();
                     mobile.makeCall(number, duration);
-                    JOptionPane.showMessageDialog(frame, "Call operation completed");
+                    int creditAfter = mobile.getCredit();
+                    if (creditAfter < creditBefore) {
+                        JOptionPane.showMessageDialog(frame, "Call made to " + number + " for " + duration + " minutes\nRemaining credit: " + creditAfter);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Insufficient credit to make call");
+                    }
                 } else {
                     JOptionPane.showMessageDialog(frame, "Error: Selected gadget is not a mobile phone");
                 }
