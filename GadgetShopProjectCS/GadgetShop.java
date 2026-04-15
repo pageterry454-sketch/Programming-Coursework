@@ -1,0 +1,323 @@
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import javax.swing.*;
+
+public class GadgetShop {
+    // list to store gadgets
+    private ArrayList<Gadget> gadgets;
+    // gui stuff
+    private JFrame frame;
+    private JTextField modelField, priceField, weightField, sizeField, creditField, memoryField, durationField, downloadField, displayField;
+    private JButton addMobileBtn, addMP3Btn, clearBtn, displayAllBtn, makeCallBtn, downloadBtn;
+
+    // constructor for the shop
+    public GadgetShop() {
+        gadgets = new ArrayList<>();
+        createGUI();
+    }
+
+    private void createGUI() {
+        // make the main window
+        frame = new JFrame("Gadget Shop - CS4001 Coursework");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+        frame.setSize(550, 450);
+        frame.getContentPane().setBackground(new Color(240, 248, 255)); // Light blue background
+
+        // title label
+        JLabel titleLabel = new JLabel("Welcome to Gadget Shop", JLabel.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        titleLabel.setForeground(new Color(0, 102, 204));
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        frame.add(titleLabel, BorderLayout.NORTH);
+
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBackground(new Color(240, 248, 255));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.WEST;
+
+        // add model field
+        gbc.gridx = 0; gbc.gridy = 0;
+        JLabel modelLabel = new JLabel("Model:");
+        modelLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(modelLabel, gbc);
+        gbc.gridx = 1;
+        modelField = new JTextField(15);
+        modelField.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(modelField, gbc);
+
+        // Row 1: Price
+        gbc.gridx = 0; gbc.gridy = 1;
+        JLabel priceLabel = new JLabel("Price:");
+        priceLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(priceLabel, gbc);
+        gbc.gridx = 1;
+        priceField = new JTextField(15);
+        priceField.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(priceField, gbc);
+
+        // Row 2: Weight
+        gbc.gridx = 0; gbc.gridy = 2;
+        JLabel weightLabel = new JLabel("Weight:");
+        weightLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(weightLabel, gbc);
+        gbc.gridx = 1;
+        weightField = new JTextField(15);
+        weightField.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(weightField, gbc);
+
+        // Row 3: Size
+        gbc.gridx = 0; gbc.gridy = 3;
+        JLabel sizeLabel = new JLabel("Size:");
+        sizeLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(sizeLabel, gbc);
+        gbc.gridx = 1;
+        sizeField = new JTextField(15);
+        sizeField.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(sizeField, gbc);
+
+        // Row 4: Credit
+        gbc.gridx = 0; gbc.gridy = 4;
+        JLabel creditLabel = new JLabel("Credit:");
+        creditLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(creditLabel, gbc);
+        gbc.gridx = 1;
+        creditField = new JTextField(15);
+        creditField.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(creditField, gbc);
+
+        // Row 5: Memory
+        gbc.gridx = 0; gbc.gridy = 5;
+        JLabel memoryLabel = new JLabel("Memory:");
+        memoryLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(memoryLabel, gbc);
+        gbc.gridx = 1;
+        memoryField = new JTextField(15);
+        memoryField.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(memoryField, gbc);
+
+        // Row 6: Duration
+        gbc.gridx = 0; gbc.gridy = 6;
+        JLabel durationLabel = new JLabel("Duration:");
+        durationLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(durationLabel, gbc);
+        gbc.gridx = 1;
+        durationField = new JTextField(15);
+        durationField.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(durationField, gbc);
+
+        // Row 7: Download Size
+        gbc.gridx = 0; gbc.gridy = 7;
+        JLabel downloadLabel = new JLabel("Download Size:");
+        downloadLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(downloadLabel, gbc);
+        gbc.gridx = 1;
+        downloadField = new JTextField(15);
+        downloadField.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(downloadField, gbc);
+
+        // Row 8: Display Number
+        gbc.gridx = 0; gbc.gridy = 8;
+        JLabel displayLabel = new JLabel("Display Number:");
+        displayLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(displayLabel, gbc);
+        gbc.gridx = 1;
+        displayField = new JTextField(15);
+        displayField.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(displayField, gbc);
+
+        // buttons panel
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.setBackground(new Color(240, 248, 255));
+
+        // add mobile button
+        addMobileBtn = new JButton("Add Mobile");
+        addMobileBtn.setBackground(new Color(34, 139, 34));
+        addMobileBtn.setForeground(Color.WHITE);
+        addMobileBtn.setFont(new Font("Arial", Font.BOLD, 12));
+
+        addMP3Btn = new JButton("Add MP3");
+        addMP3Btn.setBackground(new Color(34, 139, 34));
+        addMP3Btn.setForeground(Color.WHITE);
+        addMP3Btn.setFont(new Font("Arial", Font.BOLD, 12));
+
+        clearBtn = new JButton("Clear");
+        clearBtn.setBackground(new Color(255, 165, 0));
+        clearBtn.setForeground(Color.WHITE);
+        clearBtn.setFont(new Font("Arial", Font.BOLD, 12));
+
+        displayAllBtn = new JButton("Display All");
+        displayAllBtn.setBackground(new Color(0, 102, 204));
+        displayAllBtn.setForeground(Color.WHITE);
+        displayAllBtn.setFont(new Font("Arial", Font.BOLD, 12));
+
+        makeCallBtn = new JButton("Make a Call");
+        makeCallBtn.setBackground(new Color(255, 69, 0));
+        makeCallBtn.setForeground(Color.WHITE);
+        makeCallBtn.setFont(new Font("Arial", Font.BOLD, 12));
+
+        downloadBtn = new JButton("Download Music");
+        downloadBtn.setBackground(new Color(255, 69, 0));
+        downloadBtn.setForeground(Color.WHITE);
+        downloadBtn.setFont(new Font("Arial", Font.BOLD, 12));
+
+        buttonPanel.add(addMobileBtn);
+        buttonPanel.add(addMP3Btn);
+        buttonPanel.add(clearBtn);
+        buttonPanel.add(displayAllBtn);
+        buttonPanel.add(makeCallBtn);
+        buttonPanel.add(downloadBtn);
+
+        frame.add(formPanel, BorderLayout.CENTER);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
+
+        // action listeners for buttons
+        addMobileBtn.addActionListener(e -> addMobile());
+        addMP3Btn.addActionListener(e -> addMP3());
+        clearBtn.addActionListener(e -> clearFields());
+        displayAllBtn.addActionListener(e -> displayAll());
+        makeCallBtn.addActionListener(e -> makeCall());
+        downloadBtn.addActionListener(e -> downloadMusic());
+
+        frame.setVisible(true);
+    }
+
+    // method to add mobile
+    public void addMobile(String model, double price, int weight, String size, int credit) {
+        Mobile mobile = new Mobile(model, price, weight, size, credit);
+        gadgets.add(mobile);
+    }
+
+    // method to add mp3
+    public void addMP3(String model, double price, int weight, String size, int memory) {
+        MP3 mp3 = new MP3(model, price, weight, size, memory);
+        gadgets.add(mp3);
+    }
+
+    // display all gadgets
+    public void displayAll() {
+        if (gadgets.isEmpty()) {
+            JOptionPane.showMessageDialog(frame, "No gadgets in the shop.");
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < gadgets.size(); i++) {
+            sb.append("Gadget ").append(i).append(":\n");
+            Gadget g = gadgets.get(i);
+            sb.append("Model: ").append(g.getModel()).append("\n");
+            sb.append("Price: ").append(g.getPrice()).append("\n");
+            sb.append("Weight: ").append(g.getWeight()).append("\n");
+            sb.append("Size: ").append(g.getSize()).append("\n");
+            if (g instanceof Mobile) {
+                sb.append("Credit: ").append(((Mobile) g).getCredit()).append("\n");
+            } else if (g instanceof MP3) {
+                sb.append("Memory: ").append(((MP3) g).getMemory()).append("\n");
+            }
+            sb.append("\n");
+        }
+        JOptionPane.showMessageDialog(frame, sb.toString());
+        // Also print to console
+        for (int i = 0; i < gadgets.size(); i++) {
+            System.out.println("Gadget " + i + ":");
+            gadgets.get(i).display();
+            System.out.println();
+        }
+    }
+
+    // add mobile from gui
+    private void addMobile() {
+        try {
+            String model = modelField.getText();
+            double price = Double.parseDouble(priceField.getText());
+            int weight = Integer.parseInt(weightField.getText());
+            String size = sizeField.getText();
+            int credit = Integer.parseInt(creditField.getText());
+            addMobile(model, price, weight, size, credit);
+            JOptionPane.showMessageDialog(frame, "Mobile added successfully");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Invalid input for mobile");
+        }
+    }
+
+    // add mp3 from gui
+    private void addMP3() {
+        try {
+            String model = modelField.getText();
+            double price = Double.parseDouble(priceField.getText());
+            int weight = Integer.parseInt(weightField.getText());
+            String size = sizeField.getText();
+            int memory = Integer.parseInt(memoryField.getText());
+            addMP3(model, price, weight, size, memory);
+            JOptionPane.showMessageDialog(frame, "MP3 added successfully");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Invalid input for MP3");
+        }
+    }
+
+    // clear all fields
+    private void clearFields() {
+        modelField.setText("");
+        priceField.setText("");
+        weightField.setText("");
+        sizeField.setText("");
+        creditField.setText("");
+        memoryField.setText("");
+        durationField.setText("");
+        downloadField.setText("");
+        displayField.setText("");
+    }
+
+    // make a call
+    private void makeCall() {
+        try {
+            int index = Integer.parseInt(displayField.getText());
+            if (index >= 0 && index < gadgets.size() && gadgets.get(index) instanceof Mobile) {
+                Mobile mobile = (Mobile) gadgets.get(index);
+                // Auto-generate a random phone number
+                String number = generatePhoneNumber();
+                int duration = Integer.parseInt(durationField.getText());
+                mobile.makeCall(number, duration);
+                JOptionPane.showMessageDialog(frame, "Call made to " + number);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Invalid gadget number or not a mobile");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Invalid input for call");
+        }
+    }
+
+    // download music
+    private void downloadMusic() {
+        try {
+            int index = Integer.parseInt(displayField.getText());
+            if (index >= 0 && index < gadgets.size() && gadgets.get(index) instanceof MP3) {
+                MP3 mp3 = (MP3) gadgets.get(index);
+                int size = Integer.parseInt(downloadField.getText());
+                mp3.downloadMusic(size);
+                JOptionPane.showMessageDialog(frame, "Download attempted");
+            } else {
+                JOptionPane.showMessageDialog(frame, "Invalid gadget number or not an MP3");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Invalid input for download");
+        }
+    }
+
+    // generate random phone number
+    private String generatePhoneNumber() {
+        // Generate a random 10-digit phone number starting with 07
+        StringBuilder sb = new StringBuilder("07");
+        for (int i = 0; i < 8; i++) {
+            sb.append((int) (Math.random() * 10));
+        }
+        return sb.toString();
+    }
+
+    // main method
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new GadgetShop());
+    }
+}
