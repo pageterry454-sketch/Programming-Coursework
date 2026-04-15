@@ -412,16 +412,6 @@ public class GadgetShop {
         }
     }
 
-    // generate random phone number
-    private String generatePhoneNumber() {
-        // Generate a random 10-digit phone number starting with 07
-        StringBuilder sb = new StringBuilder("07");
-        for (int i = 0; i < 8; i++) {
-            sb.append((int) (Math.random() * 10));
-        }
-        return sb.toString();
-    }
-
     // main method
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new GadgetShop());
