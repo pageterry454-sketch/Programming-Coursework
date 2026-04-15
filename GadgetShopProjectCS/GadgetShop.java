@@ -207,6 +207,99 @@ public class GadgetShop {
         gadgets.add(mp3);
     }
 
+    // INPUT GETTER METHODS
+    // Get model from text field
+    private String getModel() {
+        return modelField.getText();
+    }
+
+    // Get price from text field and convert to double
+    private double getPrice() {
+        try {
+            return Double.parseDouble(priceField.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Error: Price must be a decimal number");
+            return -1;
+        }
+    }
+
+    // Get weight from text field and convert to integer
+    private int getWeight() {
+        try {
+            return Integer.parseInt(weightField.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Error: Weight must be an integer");
+            return -1;
+        }
+    }
+
+    // Get size from text field
+    private String getSize() {
+        return sizeField.getText();
+    }
+
+    // Get credit from text field and convert to integer
+    private int getCredit() {
+        try {
+            return Integer.parseInt(creditField.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Error: Credit must be an integer");
+            return -1;
+        }
+    }
+
+    // Get memory from text field and convert to integer
+    private int getMemory() {
+        try {
+            return Integer.parseInt(memoryField.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Error: Memory must be an integer");
+            return -1;
+        }
+    }
+
+    // Get phone number from text field
+    private String getPhoneNumber() {
+        return phoneNumberField.getText();
+    }
+
+    // Get duration from text field and convert to integer
+    private int getDuration() {
+        try {
+            return Integer.parseInt(durationField.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Error: Duration must be an integer");
+            return -1;
+        }
+    }
+
+    // Get download size from text field and convert to integer
+    private int getDownloadSize() {
+        try {
+            return Integer.parseInt(downloadField.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Error: Download size must be an integer");
+            return -1;
+        }
+    }
+
+    // Get display number from text field with validation
+    private int getDisplayNumber() {
+        int displayNumber = -1;
+        try {
+            displayNumber = Integer.parseInt(displayField.getText());
+            // Check if the display number is in the correct range
+            if (displayNumber < 0 || displayNumber >= gadgets.size()) {
+                JOptionPane.showMessageDialog(frame, "Error: Display number must be between 0 and " + (gadgets.size() - 1));
+                return -1;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(frame, "Error: Display number must be an integer");
+            return -1;
+        }
+        return displayNumber;
+    }
+
     // display all gadgets
     public void displayAll() {
         if (gadgets.isEmpty()) {
@@ -239,31 +332,31 @@ public class GadgetShop {
 
     // add mobile from gui
     private void addMobile() {
-        try {
-            String model = modelField.getText();
-            double price = Double.parseDouble(priceField.getText());
-            int weight = Integer.parseInt(weightField.getText());
-            String size = sizeField.getText();
-            int credit = Integer.parseInt(creditField.getText());
+        String model = getModel();
+        double price = getPrice();
+        int weight = getWeight();
+        String size = getSize();
+        int credit = getCredit();
+        if (price > 0 && weight > 0 && credit >= 0 && !model.isEmpty() && !size.isEmpty()) {
             addMobile(model, price, weight, size, credit);
             JOptionPane.showMessageDialog(frame, "Mobile added successfully");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(frame, "Invalid input for mobile");
+        } else {
+            JOptionPane.showMessageDialog(frame, "Invalid input values");
         }
     }
 
     // add mp3 from gui
     private void addMP3() {
-        try {
-            String model = modelField.getText();
-            double price = Double.parseDouble(priceField.getText());
-            int weight = Integer.parseInt(weightField.getText());
-            String size = sizeField.getText();
-            int memory = Integer.parseInt(memoryField.getText());
+        String model = getModel();
+        double price = getPrice();
+        int weight = getWeight();
+        String size = getSize();
+        int memory = getMemory();
+        if (price > 0 && weight > 0 && memory > 0 && !model.isEmpty() && !size.isEmpty()) {
             addMP3(model, price, weight, size, memory);
             JOptionPane.showMessageDialog(frame, "MP3 added successfully");
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(frame, "Invalid input for MP3");
+        } else {
+            JOptionPane.showMessageDialog(frame, "Invalid input values");
         }
     }
 
@@ -282,37 +375,40 @@ public class GadgetShop {
 
     // make a call
     private void makeCall() {
-        try {
-            int index = Integer.parseInt(displayField.getText());
-            if (index >= 0 && index < gadgets.size() && gadgets.get(index) instanceof Mobile) {
-                Mobile mobile = (Mobile) gadgets.get(index);
-                // Auto-generate a random phone number
-                String number = generatePhoneNumber();
-                int duration = Integer.parseInt(durationField.getText());
-                mobile.makeCall(number, duration);
-                JOptionPane.showMessageDialog(frame, "Call made to " + number);
+        int index = getDisplayNumber();
+        if (index != -1) {
+            String number = getPhoneNumber();
+            int duration = getDuration();
+            if (!number.isEmpty() && duration > 0) {
+                if (gadgets.get(index) instanceof Mobile) {
+                    Mobile mobile = (Mobile) gadgets.get(index);
+                    mobile.makeCall(number, duration);
+                    JOptionPane.showMessageDialog(frame, "Call operation completed");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Error: Selected gadget is not a mobile phone");
+                }
             } else {
-                JOptionPane.showMessageDialog(frame, "Invalid gadget number or not a mobile");
+                JOptionPane.showMessageDialog(frame, "Error: Invalid phone number or duration");
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(frame, "Invalid input for call");
         }
     }
 
     // download music
     private void downloadMusic() {
-        try {
-            int index = Integer.parseInt(displayField.getText());
-            if (index >= 0 && index < gadgets.size() && gadgets.get(index) instanceof MP3) {
-                MP3 mp3 = (MP3) gadgets.get(index);
-                int size = Integer.parseInt(downloadField.getText());
-                mp3.downloadMusic(size);
-                JOptionPane.showMessageDialog(frame, "Download attempted");
+        int index = getDisplayNumber();
+        if (index != -1) {
+            int size = getDownloadSize();
+            if (size > 0) {
+                if (gadgets.get(index) instanceof MP3) {
+                    MP3 mp3 = (MP3) gadgets.get(index);
+                    mp3.downloadMusic(size);
+                    JOptionPane.showMessageDialog(frame, "Download operation completed");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Error: Selected gadget is not an MP3 player");
+                }
             } else {
-                JOptionPane.showMessageDialog(frame, "Invalid gadget number or not an MP3");
+                JOptionPane.showMessageDialog(frame, "Error: Invalid download size");
             }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(frame, "Invalid input for download");
         }
     }
 
