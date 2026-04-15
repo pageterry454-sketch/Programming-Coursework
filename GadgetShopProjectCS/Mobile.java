@@ -1,20 +1,24 @@
 
 public class Mobile extends Gadget {
-    // credit for the mobile
+
+    // How much calling credit is left
     private int credit;
 
-    // constructor for mobile
+
+    // Constructor for Mobile
     public Mobile(String model, double price, int weight, String size, int credit) {
         super(model, price, weight, size);
         this.credit = credit;
     }
 
-    // get the credit
+
+    // Get the current credit
     public int getCredit() {
         return credit;
     }
 
-    // add credit to the mobile
+
+    // Add more credit (if amount is positive)
     public void addCredit(int amount) {
         if (amount > 0) {
             credit += amount;
@@ -23,7 +27,8 @@ public class Mobile extends Gadget {
         }
     }
 
-    // make a call with the mobile
+
+    // Try to make a call. If enough credit, reduce credit and print info.
     public void makeCall(String number, int duration) {
         if (credit >= duration) {
             System.out.println("Calling " + number + " for " + duration + " minutes");
@@ -33,7 +38,8 @@ public class Mobile extends Gadget {
         }
     }
 
-    // display the mobile info
+
+    // Print out all the mobile details
     @Override
     public void display() {
         super.display();

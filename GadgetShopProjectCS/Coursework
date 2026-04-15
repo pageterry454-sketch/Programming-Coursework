@@ -1,0 +1,292 @@
+CS4001 Coursework – Step-by-Step Guide
+
+---
+
+1. SETTING UP THE PROJECT - Done
+
+---
+
+1. Open BlueJ
+2. Create a new project (e.g., "GadgetShopProject")
+3. Create 4 classes:
+
+   * Gadget
+   * Mobile
+   * MP3
+   * GadgetShop
+
+---
+
+2. CREATE THE GADGET CLASS - Done
+
+---
+
+1. Add 4 attributes:
+
+   * model (String)
+   * price (double)
+   * weight (int)
+   * size (String)
+
+2. Create a constructor:
+
+   * Takes 4 parameters
+   * Assign values using "this"
+
+3. Create accessor (getter) methods:
+
+   * getModel()
+   * getPrice()
+   * getWeight()
+   * getSize()
+
+4. Create display() method:
+
+   * Print all attributes using System.out.println()
+
+---
+
+3. CREATE THE MOBILE CLASS (SUBCLASS) - Done
+
+---
+
+1. Make Mobile extend Gadget
+
+2. Add attribute:
+
+   * credit (int)
+
+3. Constructor:
+
+   * Takes 5 parameters
+   * Call super(...) for Gadget attributes
+   * Assign credit
+
+4. Methods:
+
+   * getCredit()
+
+   * addCredit(amount)
+     IF amount > 0 → add to credit
+     ELSE → print error message
+
+   * makeCall(number, duration)
+     IF credit >= duration:
+     print call info
+     reduce credit
+     ELSE:
+     print "not enough credit"
+
+5. Override display():
+
+   * Call super.display()
+   * Print credit
+
+---
+
+4. CREATE THE MP3 CLASS (SUBCLASS) - Done
+
+---
+
+1. Make MP3 extend Gadget
+
+2. Add attribute:
+
+   * memory (int)
+
+3. Constructor:
+
+   * Takes 5 parameters
+   * Call super(...)
+   * Assign memory
+
+4. Methods:
+
+   * getMemory()
+
+   * downloadMusic(size)
+     IF enough memory:
+     reduce memory
+     ELSE:
+     print error
+
+   * deleteMusic(size)
+     increase memory
+
+5. Override display():
+
+   * Call super.display()
+   * Print memory
+
+---
+
+5. CREATE THE GADGETSHOP CLASS - Done
+
+---
+
+1. Import ArrayList
+
+2. Create attribute:
+
+   * ArrayList<Gadget> gadgets
+
+3. Constructor:
+
+   * Initialize ArrayList
+
+---
+
+6. ADD CORE METHODS - Done
+
+---
+
+1. addMobile(...)
+
+   * Create Mobile object
+   * Add to ArrayList
+
+2. addMP3(...)
+
+   * Create MP3 object
+   * Add to ArrayList
+
+3. displayAll()
+
+   * Loop through ArrayList
+   * Print index
+   * Call display()
+
+---
+
+7. GUI COMPONENTS (IMPORTANT PART) - Done
+
+---
+
+Create:
+
+* 10 TextFields:
+  model, price, weight, size,
+  credit, memory,
+  phone number, duration,
+  download size,
+  display number
+
+* Buttons:
+  Add Mobile
+  Add MP3
+  Clear
+  Display All
+  Make a Call
+  Download Music
+
+---
+
+8. INPUT METHODS - Done
+
+---
+
+For each text field:
+
+* Read text
+* Convert to correct type
+
+Use try/catch for:
+
+* int
+* double
+
+Example:
+TRY:
+parse number
+CATCH:
+show error message
+
+---
+
+9. DISPLAY NUMBER METHOD - Done
+
+---
+
+1. Set displayNumber = -1
+2. Try to convert input to integer
+3. Check range:
+   IF valid → return number
+   ELSE → show dialog error
+4. Return -1 if invalid
+
+---
+
+10. BUTTON FUNCTIONALITY - Done
+
+---
+
+Add Mobile:
+
+* Read all inputs
+* Create Mobile
+* Add to ArrayList
+
+Add MP3:
+
+* Read inputs
+* Create MP3
+* Add to ArrayList
+
+Clear:
+
+* Set all text fields to ""
+
+Display All:
+
+* Loop through ArrayList
+* Print each gadget
+
+Make a Call:
+
+* Get display number
+* IF valid:
+  cast to Mobile
+  call makeCall()
+
+Download Music:
+
+* Get display number
+* IF valid:
+  cast to MP3
+  call downloadMusic()
+
+---
+
+11. TESTING - Done
+
+---
+
+Test:
+
+1. Add Mobile
+2. Add MP3
+3. Display All
+4. Make Call
+5. Download Music
+6. Invalid input (try/catch)
+7. Command prompt run
+
+---
+
+12. REPORT TASKS - To Do
+
+---
+
+Include:
+
+* GitHub link
+* Class diagram
+* Method descriptions
+* Pseudocode
+* Screenshots of tests
+* Error discussion
+* Conclusion
+
+---
+
+## END OF GUIDE

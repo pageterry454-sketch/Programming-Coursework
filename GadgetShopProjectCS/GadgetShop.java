@@ -5,62 +5,67 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 public class GadgetShop {
-    // list to store gadgets
+
+
+    // List for all gadgets
     private ArrayList<Gadget> gadgets;
-    // gui stuff
+
+    // GUI stuff
     private JFrame frame;
     private JTextField modelField, priceField, weightField, sizeField, creditField, memoryField, phoneNumberField, durationField, downloadField, displayField;
     private JButton addMobileBtn, addMP3Btn, clearBtn, makeCallBtn, downloadBtn;
 
-    // constructor for the shop
+
+
+    // Set up the shop and GUI
     public GadgetShop() {
         gadgets = new ArrayList<>();
         createGUI();
     }
 
+    // Set up the main window and all the GUI bits
     private void createGUI() {
-        // make the main window
         frame = new JFrame("Gadget Shop - CS4001 Coursework");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.setSize(800, 700);
         frame.getContentPane().setBackground(new Color(240, 248, 255));
 
-        // title label
+        // Title at the top
         JLabel titleLabel = new JLabel("Welcome to Gadget Shop", JLabel.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         titleLabel.setForeground(new Color(0, 102, 204));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         frame.add(titleLabel, BorderLayout.NORTH);
 
-        // Create tabbed pane for different operations
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setBackground(new Color(240, 248, 255));
+        // Tabs for different stuff
+        JTabbedPane tabs = new JTabbedPane();
+        tabs.setBackground(new Color(240, 248, 255));
 
-        // Tab 1: Add Gadgets
-        JPanel addGadgetPanel = createAddGadgetPanel();
-        tabbedPane.addTab("Add Gadgets", addGadgetPanel);
+        // Tab for adding gadgets
+        JPanel addPanel = createAddGadgetPanel();
+        tabs.addTab("Add Gadgets", addPanel);
 
-        // Tab 2: Operations (Make Call, Download Music)
-        JPanel operationsPanel = createOperationsPanel();
-        tabbedPane.addTab("Operations", operationsPanel);
+        // Tab for making calls and downloading music
+        JPanel opsPanel = createOperationsPanel();
+        tabs.addTab("Operations", opsPanel);
 
-        // Tab 3: Display & Manage
-        JPanel displayPanel = createDisplayPanel();
-        tabbedPane.addTab("View Gadgets", displayPanel);
+        // Tab for viewing all gadgets
+        JPanel viewPanel = createDisplayPanel();
+        tabs.addTab("View Gadgets", viewPanel);
 
-        frame.add(tabbedPane, BorderLayout.CENTER);
+        frame.add(tabs, BorderLayout.CENTER);
 
-        // footer with clear button
-        JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        footerPanel.setBackground(new Color(240, 248, 255));
+        // Clear button at the bottom
+        JPanel footer = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        footer.setBackground(new Color(240, 248, 255));
         clearBtn = new JButton("Clear All Fields");
         clearBtn.setBackground(new Color(255, 165, 0));
         clearBtn.setForeground(Color.WHITE);
         clearBtn.setFont(new Font("Arial", Font.BOLD, 12));
         clearBtn.addActionListener(e -> clearFields());
-        footerPanel.add(clearBtn);
-        frame.add(footerPanel, BorderLayout.SOUTH);
+        footer.add(clearBtn);
+        frame.add(footer, BorderLayout.SOUTH);
 
         frame.setVisible(true);
     }
@@ -269,33 +274,16 @@ public class GadgetShop {
         refreshBtn.setBackground(new Color(0, 102, 204));
         refreshBtn.setForeground(Color.WHITE);
         refreshBtn.setFont(new Font("Arial", Font.BOLD, 12));
-        refreshBtn.addActionListener(e -> {
-            StringBuilder sb = new StringBuilder();
-            if (gadgets.isEmpty()) {
-                sb.append("No gadgets in the shop yet.\n");
-            } else {
-                for (int i = 0; i < gadgets.size(); i++) {
-                    sb.append("═══════════════════════════════════\n");
-                    sb.append("Gadget Index: ").append(i).append("\n");
-                    sb.append("───────────────────────────────────\n");
-                    Gadget g = gadgets.get(i);
-                    sb.append("Model: ").append(g.getModel()).append("\n");
-                    sb.append("Price: £").append(g.getPrice()).append("\n");
-                    sb.append("Weight: ").append(g.getWeight()).append("g\n");
-                    sb.append("Size: ").append(g.getSize()).append("\n");
-                    if (g instanceof Mobile) {
-                        sb.append("Type: MOBILE PHONE\n");
-                        sb.append("Credit: ").append(((Mobile) g).getCredit()).append(" minutes\n");
-                    } else if (g instanceof MP3) {
-                        sb.append("Type: MP3 PLAYER\n");
-                        sb.append("Memory: ").append(((MP3) g).getMemory()).append(" MB\n");
-                    }
-                    sb.append("\n");
-                }
-            }
-            displayArea.setText(sb.toString());
-        });
+        refreshBtn.addActionListener(e -> refreshDisplayArea(displayArea));
         panel.add(refreshBtn, BorderLayout.SOUTH);
+
+        // Add a dedicated Display All button as per brief
+        JButton displayAllBtn = new JButton("Display All (Console)");
+        displayAllBtn.setBackground(new Color(70, 130, 180));
+        displayAllBtn.setForeground(Color.WHITE);
+        displayAllBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        displayAllBtn.addActionListener(e -> displayAll());
+        panel.add(displayAllBtn, BorderLayout.NORTH);
 
         return panel;
     }
@@ -467,6 +455,11 @@ public class GadgetShop {
         if (index != -1) {
             String number = getPhoneNumber();
             int duration = getDuration();
+            // If phone number is empty, generate a random one
+            if (number.isEmpty()) {
+                number = generateRandomPhoneNumber();
+                phoneNumberField.setText(number);
+            }
             if (!number.isEmpty() && duration > 0) {
                 if (gadgets.get(index) instanceof Mobile) {
                     Mobile mobile = (Mobile) gadgets.get(index);
@@ -487,6 +480,15 @@ public class GadgetShop {
         }
     }
 
+    // Helper to generate a random UK-style phone number
+    private String generateRandomPhoneNumber() {
+        StringBuilder sb = new StringBuilder("07");
+        for (int i = 0; i < 9; i++) {
+            sb.append((int)(Math.random() * 10));
+        }
+        return sb.toString();
+    }
+
     // download music
     private void downloadMusic() {
         int index = getDisplayNumber();
@@ -495,8 +497,12 @@ public class GadgetShop {
             if (size > 0) {
                 if (gadgets.get(index) instanceof MP3) {
                     MP3 mp3 = (MP3) gadgets.get(index);
-                    mp3.downloadMusic(size);
-                    JOptionPane.showMessageDialog(frame, "Download operation completed");
+                    boolean success = mp3.downloadMusic(size);
+                    if (success) {
+                        JOptionPane.showMessageDialog(frame, "Download operation completed");
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Not enough memory to download music");
+                    }
                 } else {
                     JOptionPane.showMessageDialog(frame, "Error: Selected gadget is not an MP3 player");
                 }
@@ -504,6 +510,34 @@ public class GadgetShop {
                 JOptionPane.showMessageDialog(frame, "Error: Invalid download size");
             }
         }
+    }
+
+    // Helper to refresh display area
+    private void refreshDisplayArea(JTextArea displayArea) {
+        StringBuilder sb = new StringBuilder();
+        if (gadgets.isEmpty()) {
+            sb.append("No gadgets in the shop yet.\n");
+        } else {
+            for (int i = 0; i < gadgets.size(); i++) {
+                sb.append("═══════════════════════════════════\n");
+                sb.append("Gadget Index: ").append(i).append("\n");
+                sb.append("───────────────────────────────────\n");
+                Gadget g = gadgets.get(i);
+                sb.append("Model: ").append(g.getModel()).append("\n");
+                sb.append("Price: £").append(g.getPrice()).append("\n");
+                sb.append("Weight: ").append(g.getWeight()).append("g\n");
+                sb.append("Size: ").append(g.getSize()).append("\n");
+                if (g instanceof Mobile) {
+                    sb.append("Type: MOBILE PHONE\n");
+                    sb.append("Credit: ").append(((Mobile) g).getCredit()).append(" minutes\n");
+                } else if (g instanceof MP3) {
+                    sb.append("Type: MP3 PLAYER\n");
+                    sb.append("Memory: ").append(((MP3) g).getMemory()).append(" MB\n");
+                }
+                sb.append("\n");
+            }
+        }
+        displayArea.setText(sb.toString());
     }
 
     // main method

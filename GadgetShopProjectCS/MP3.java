@@ -1,36 +1,41 @@
 
 public class MP3 extends Gadget {
-    // memory for the mp3
+
+    // How much memory is left (MB)
     private int memory;
 
-    // constructor for mp3
+
+    // Constructor for MP3 player
     public MP3(String model, double price, int weight, String size, int memory) {
         super(model, price, weight, size);
         this.memory = memory;
     }
 
-    // get the memory
+
+    // Get the available memory
     public int getMemory() {
         return memory;
     }
 
-    // download music to the mp3
-    public void downloadMusic(int size) {
+
+    // Try to download music. Returns true if successful.
+    public boolean downloadMusic(int size) {
         if (memory >= size) {
             memory -= size;
-            System.out.println("Downloaded music, remaining memory: " + memory);
+            return true;
         } else {
-            System.out.println("Not enough memory");
+            return false;
         }
     }
 
-    // delete music from the mp3
+
+    // Delete music and free up memory
     public void deleteMusic(int size) {
         memory += size;
-        System.out.println("Deleted music, available memory: " + memory);
     }
 
-    // display the mp3 info
+
+    // Print out all the MP3 details
     @Override
     public void display() {
         super.display();
