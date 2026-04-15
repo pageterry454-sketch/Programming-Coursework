@@ -9,7 +9,7 @@ public class GadgetShop {
     private ArrayList<Gadget> gadgets;
     // gui stuff
     private JFrame frame;
-    private JTextField modelField, priceField, weightField, sizeField, creditField, memoryField, durationField, downloadField, displayField;
+    private JTextField modelField, priceField, weightField, sizeField, creditField, memoryField, phoneNumberField, durationField, downloadField, displayField;
     private JButton addMobileBtn, addMP3Btn, clearBtn, displayAllBtn, makeCallBtn, downloadBtn;
 
     // constructor for the shop
@@ -119,8 +119,18 @@ public class GadgetShop {
         downloadField.setFont(new Font("Arial", Font.PLAIN, 12));
         formPanel.add(downloadField, gbc);
 
-        // Row 8: Display Number
+        // Row 8: Phone Number
         gbc.gridx = 0; gbc.gridy = 8;
+        JLabel phoneNumberLabel = new JLabel("Phone Number:");
+        phoneNumberLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(phoneNumberLabel, gbc);
+        gbc.gridx = 1;
+        phoneNumberField = new JTextField(15);
+        phoneNumberField.setFont(new Font("Arial", Font.PLAIN, 12));
+        formPanel.add(phoneNumberField, gbc);
+
+        // Row 9: Display Number
+        gbc.gridx = 0; gbc.gridy = 9;
         JLabel displayLabel = new JLabel("Display Number:");
         displayLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         formPanel.add(displayLabel, gbc);
