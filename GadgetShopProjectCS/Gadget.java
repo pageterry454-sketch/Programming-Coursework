@@ -1,51 +1,49 @@
 
-public class Gadget {
 
-    // Gadget details
+// Gadget class for uni project
+public class Gadget {
+    // fields for gadget info
     private String model;
     private double price;
     private int weight;
     private String size;
 
-
-    // Constructor for Gadget
+    // constructor
     public Gadget(String model, double price, int weight, String size) {
         this.model = model;
         this.price = price;
         this.weight = weight;
         this.size = size;
+        // System.out.println("Gadget created: " + model); // debug
     }
 
-
-    // Get the model name
+    // get model
     public String getModel() {
         return model;
     }
 
-
-    // Get the price
+    // get price
     public double getPrice() {
         return price;
     }
 
-
-    // Get the weight
+    // get weight
     public int getWeight() {
         return weight;
     }
 
-
-    // Get the size
+    // get size
     public String getSize() {
         return size;
     }
 
-
-    // Print out all the gadget details
+    // print details
     public void display() {
         System.out.println("Model: " + model);
         System.out.println("Price: " + price);
         System.out.println("Weight: " + weight);
         System.out.println("Size: " + size);
+        // System.out.println("--- end of gadget ---");
     }
+}
 }
